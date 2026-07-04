@@ -76,7 +76,23 @@ export default function PredictFormView({ user, onPredictionComplete, onCancel }
       });
 
       if (!response.ok) {
-        throw new Error('Prediction API failed to evaluate applicant profile.');
+        let errMsg = `Prediction API failed (Status ${response.status}).`;
+        try {
+          const errData = await response.json();
+          if (errData && errData.error) {
+            errMsg += ` Details: ${errData.error}`;
+          } else if (errData && errData.message) {
+            errMsg += ` Details: ${errData.message}`;
+          }
+        } catch (_) {
+          try {
+            const txt = await response.text();
+            if (txt) {
+              errMsg += ` Response: ${txt.substring(0, 150)}`;
+            }
+          } catch (_) {}
+        }
+        throw new Error(errMsg);
       }
 
       const prediction = await response.json();
