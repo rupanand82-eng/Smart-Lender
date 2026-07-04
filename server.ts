@@ -42,7 +42,7 @@ if (process.env.GEMINI_API_KEY) {
 
 // API Routes
 // 1. Get ML Model Metrics and Feature Importances
-app.get("/api/ml/metrics", (req, res) => {
+app.get(["/api/ml/metrics", "/ml/metrics"], (req, res) => {
   try {
     res.json({
       bestModel: mlSuite.bestModelName,
@@ -67,7 +67,7 @@ app.get("/api/ml/metrics", (req, res) => {
 });
 
 // 2. Predict Loan Application Eligibility
-app.post("/api/ml/predict", (req, res) => {
+app.post(["/api/ml/predict", "/ml/predict"], (req, res) => {
   try {
     const appData = req.body;
     if (!appData) {
@@ -82,7 +82,7 @@ app.post("/api/ml/predict", (req, res) => {
 });
 
 // 3. Retrain ML Models on Uploaded CSV Dataset
-app.post("/api/ml/train", (req, res) => {
+app.post(["/api/ml/train", "/ml/train"], (req, res) => {
   try {
     const { rows } = req.body;
     if (!rows || !Array.isArray(rows) || rows.length < 10) {
@@ -102,7 +102,7 @@ app.post("/api/ml/train", (req, res) => {
 });
 
 // 4. Reset to Default Synthetic Dataset
-app.post("/api/ml/reset", (req, res) => {
+app.post(["/api/ml/reset", "/ml/reset"], (req, res) => {
   try {
     const defaultData = generateSyntheticLoanDataset(250);
     const result = mlSuite.trainAndEvaluate(defaultData);
@@ -116,7 +116,7 @@ app.post("/api/ml/reset", (req, res) => {
 });
 
 // 5. Intelligent Multi-Turn AI Chatbot Proxy with Google Search Grounding
-app.post("/api/chat", async (req, res) => {
+app.post(["/api/chat", "/chat"], async (req, res) => {
   const { messages, userPrediction } = req.body;
 
   if (!messages || !Array.isArray(messages)) {
