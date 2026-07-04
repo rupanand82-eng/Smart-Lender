@@ -1,0 +1,6 @@
+{
+  "name": "Smart Lender AI",
+  "description": "An advanced, beginner-friendly AI-powered loan prediction application featuring high-performance ML models, detailed analytics charts, secure Firebase authentication, and an intelligent Gemini financial chatbot.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
